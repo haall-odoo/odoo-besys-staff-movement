@@ -16,3 +16,8 @@ Each record should propose:
 - Remark (based on description field) field for each
 - List views for the different record
  - Group by entries/departures/change
+
+
+
+## To change before prod
+- For now base.group_user has all perm, need to manage these permissions more efficiently

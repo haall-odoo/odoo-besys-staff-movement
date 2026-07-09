@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<odoo>
+    <menuitem id="staff_movements_menu" name="Staff Movements">
+        <menuitem id="test_first_level_menu" name="First Level">
+            <menuitem id="test_model_menu_action" action="staff_movements_model_action"/>
+        </menuitem>
+    </menuitem>
+</odoo>

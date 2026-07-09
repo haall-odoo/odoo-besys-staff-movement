@@ -10,7 +10,12 @@
     It is intended to replace the Google sheet 'next arrivals' used until today.
     """,
     'installable': True,
-    'auto_install': False,
+    'auto_install': True,
     'application': True,
-    'license': 'LGPL-3'
+    'license': 'LGPL-3',
+    'data': [
+        'data/ir.model.access.csv',
+        'views/staff_movements_views.xml',
+        'views/staff_movements_menus.xml',
+    ]
 }
