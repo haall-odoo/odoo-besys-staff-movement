@@ -5,4 +5,16 @@
         <field name="res_model">staff.movements</field>
         <field name="view_mode">list,form</field>
     </record>
+
+    <record id="staff_movements_model_list_view" model="ir.ui.view">
+        <field name="name">staff.movements.list</field>
+        <field name="model">staff.movements</field>
+        <field name="arch" type="xml">
+            <list string="Channel">
+                <field name="legal_name"/>
+                <field name="mode"/>
+                <field name="effective_date"/>
+            </list>
+        </field>
+    </record>
 </odoo>
