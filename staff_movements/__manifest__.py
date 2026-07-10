@@ -14,8 +14,8 @@
     'application': True,
     'license': 'LGPL-3',
     'data': [
-        'data/ir.model.access.csv',
         'views/staff_movements_views.xml',
-        'views/staff_movements_menus.xml',
+        'views/menus.xml',
+        'data/ir.model.access.csv',
     ]
 }

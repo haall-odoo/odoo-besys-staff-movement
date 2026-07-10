@@ -1,14 +1,8 @@
 <?xml version="1.0"?>
 <odoo>
-    <record id="staff_movements_model_action" model='ir.actions.act_window'>
-        <field name="name">Staff Movements</field>
-        <field name="res_model">staff.movements</field>
-        <field name="view_mode">list,form</field>
-    </record>
-
-    <record id="staff_movements_model_list_view" model="ir.ui.view">
-        <field name="name">staff.movements.list</field>
-        <field name="model">staff.movements</field>
+    <record id="staff_movement_model_list_view" model="ir.ui.view">
+        <field name="name">staff.movement.list</field>
+        <field name="model">staff.movement</field>
         <field name="arch" type="xml">
             <list string="Channel">
                 <field name="legal_name"/>
@@ -16,5 +10,57 @@
                 <field name="effective_date"/>
             </list>
         </field>
+    </record>
+
+    <record id="entries_staff_movement_list_view" model="ir.ui.view">
+        <field name="name">staff.movement.list</field>
+        <field name="model">staff.movement</field>
+        <field name="arch" type="xml">
+            <list string="Channel">
+                <field name="legal_name"/>
+                <field name="effective_date"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="staff_movements_model_action_movements" model='ir.actions.act_window'>
+        <field name="name">Staff Movement</field>
+        <field name="res_model">staff.movement</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="staff_movements_model_action_entries" model='ir.actions.act_window'>
+        <field name="name">Staff Movement</field>
+        <field name="res_model">staff.movement</field>
+        <field name="view_mode">list,form</field>
+        <field name="view_ids" eval="[(5,0,0),
+            (0, 0, {'view_mode': 'list', 'view_id': ref('entries_staff_movement_list_view')}),
+        ]"/>
+        <field name="context" />
+        <field name="domain">[("mode", "=", "entry")]</field>
+    </record>
+
+    <record id="staff_movements_model_action_departures" model='ir.actions.act_window'>
+        <field name="name">Staff Movement</field>
+        <field name="res_model">staff.movement</field>
+        <field name="view_mode">list,form</field>
+        <field name="context" />
+        <field name="domain">[("mode", "=", "departure")]</field>
+    </record>
+
+    <record id="staff_movements_model_action_change_of_positions" model='ir.actions.act_window'>
+        <field name="name">Staff Movement</field>
+        <field name="res_model">staff.movement</field>
+        <field name="view_mode">list,form</field>
+        <field name="context" />
+        <field name="domain">[("mode", "=", "change_of_position")]</field>
+    </record>
+
+    <record id="staff_movements_model_action_user_reviews" model='ir.actions.act_window'>
+        <field name="name">Staff Movement</field>
+        <field name="res_model">staff.movement</field>
+        <field name="view_mode">list,form</field>
+        <field name="context" />
+        <field name="domain">[("mode", "=", "user_review")]</field>
     </record>
 </odoo>
