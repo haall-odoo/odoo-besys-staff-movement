@@ -25,10 +25,10 @@ setup_venv:
 	done
 
 prerun:
-	@dropdb ${DB_NAME}
+	@${ODOO_PATH}/odoo-bin db drop ${DB_NAME}
 
 run:
-	@${ODOO_PATH}/odoo-bin --addons-path="${ENTERPRISE_PATH}, ${ODOO_PATH}/addons, ${MODULE_PATH}" -d ${DB_NAME} -i hr,hr_maintenance -u ${MODULE_NAME}
+	@${ODOO_PATH}/odoo-bin server --addons-path="${ODOO_PATH}/addons,${ENTERPRISE_PATH},${MODULE_PATH}" -d ${DB_NAME} -i hr,hr_maintenance -u ${MODULE_NAME} --dev xml,reload --with-demo 
 
 clean:
-	@rm -rf ${MODULE_PATH}/${MODULE_NAME}/*/__pycache__
+	@rm -rf ${MODULE_PATH}/${MODULE_NAME}/*__pycache__
