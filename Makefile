@@ -12,7 +12,7 @@ INTERNAL_PATH=""
 
 PATHS=${ODOO_PATH} ${ENTERPRISE_PATH} ${MODULE_PATH}
 
-all: prerun run
+all: reset_db run
 
 setup_venv:
 	@python3 -m venv "./$${VENV_NAME}"
@@ -24,11 +24,11 @@ setup_venv:
 		fi \
 	done
 
-prerun:
+reset_db:
 	@${ODOO_PATH}/odoo-bin db drop ${DB_NAME}
 
 run:
-	@${ODOO_PATH}/odoo-bin server --addons-path="${ODOO_PATH}/addons,${ENTERPRISE_PATH},${MODULE_PATH}" -d ${DB_NAME} -i hr,hr_maintenance -u ${MODULE_NAME} --dev xml,reload --with-demo 
+	@${ODOO_PATH}/odoo-bin server --addons-path="${ODOO_PATH}/addons,${ENTERPRISE_PATH},${MODULE_PATH}" -d ${DB_NAME} -i ${MODULE_NAME} -u ${MODULE_NAME} --dev xml,reload --with-demo
 
 clean:
 	@rm -rf ${MODULE_PATH}/${MODULE_NAME}/*__pycache__

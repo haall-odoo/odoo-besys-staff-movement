@@ -1,7 +1,7 @@
 {
     'name': "Staff Movements",
     'version': '0.1',
-    'depends': ['base', 'hr', 'hr_maintenance'],
+    'depends': ['hr_maintenance', 'hr_recruitment', 'bus', 'mail', 'html_editor'],
     'author': "Odoo S.A. <besysadmin@odoo.com>",
     'category': 'Administration/Staff Movements',
     'description': """
@@ -11,11 +11,10 @@
     """,
     'installable': True,
     'auto_install': True,
-    'application': True,
     'license': 'LGPL-3',
     'data': [
         'views/staff_movements_views.xml',
         'views/menus.xml',
-        'data/ir.model.access.csv',
+        'security/ir.model.access.csv',
     ]
 }

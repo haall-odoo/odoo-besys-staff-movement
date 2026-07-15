@@ -1,66 +1,98 @@
 <?xml version="1.0"?>
 <odoo>
     <record id="staff_movement_model_list_view" model="ir.ui.view">
+        <field name="name">hr.employee.staff.movement.form</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form" />
+        <field name="mode">extension</field>
+        <field name="arch" type="xml">
+            <data string="Channel">
+                <xpath expr="//div[@name='button_box']">
+                    <button name="action_open_logs"
+                        class="oe_stat_button"
+                        icon="fa-shield"
+                        type="object"
+                        >
+                        <div class="o_stat_info">
+                            Staff Movements
+                            <span class="o_stat_value">
+                                <field name="versions_count"/>
+                            </span>
+                        </div>
+                    </button>
+                </xpath>
+                <xpath expr="//notebook" position="inside">
+                    <page name="Staff Movement">
+                        <field name="staff_movement_ids" readonly="True"/>
+                    </page>
+                </xpath>
+            </data>
+        </field>
+    </record>
+
+
+    <record id="staff_movements_list" model="ir.ui.view">
         <field name="name">staff.movement.list</field>
         <field name="model">staff.movement</field>
         <field name="arch" type="xml">
-            <list string="Channel">
-                <field name="legal_name"/>
-                <field name="mode"/>
+            <list decoration-warning="is_done">
+                <field name="employee_name"/>
                 <field name="effective_date"/>
+                <field name="movement_type"/>
+                <field name="job_id"/>
+                <field name="company_id"/>
             </list>
         </field>
     </record>
 
-    <record id="entries_staff_movement_list_view" model="ir.ui.view">
-        <field name="name">staff.movement.list</field>
+    <record id="staff_movement_form" model="ir.ui.view">
+        <field name="name">staff.movement.form</field>
         <field name="model">staff.movement</field>
         <field name="arch" type="xml">
-            <list string="Channel">
-                <field name="legal_name"/>
-                <field name="effective_date"/>
-            </list>
+            <form>
+                <sheet>
+                    <field name="profile_picture" nolabel="1" widget="image" class="m-0" options="{'size': [256,256], 'zoom': false, 'preview_image':'profile_picture', 'img_class': 'border rounded h-100 object-fit-contain'}"/>
+
+                    <group>
+                        <group>
+                            <field name="employee_id"/>
+                            <field name="job_id"/>
+                            <field name="company_id"/>
+                        </group>
+                        <group>
+                            <field name="movement_type"/>
+                            <field name="effective_date"/>
+                            <field name="need_backpack" invisible="movement_type not in ('entry', 'change_of_position')"/>
+                            <field name="keyboard_layout" invisible="not need_backpack"/>
+                            <field name="new_position_id" invisible="movement_type != 'change_of_position'"/>
+                            <field name="new_company_id" invisible="movement_type != 'change_of_position'"/>
+                        </group>                            
+                    </group>
+                    <notebook>
+                        <page name="Remark">
+                            <field name="remark" type="html" options="{'collaborative': true, 'resizable': false}" placeholder="Add details about this staff movement..."/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter reload_on_follower="True"/>
+            </form>
         </field>
     </record>
 
-    <record id="staff_movements_model_action_movements" model='ir.actions.act_window'>
-        <field name="name">Staff Movement</field>
+
+    <record id="staff_movements_menu_action" model="ir.actions.act_window">
+        <field name="name">Staff Movements</field>
         <field name="res_model">staff.movement</field>
         <field name="view_mode">list,form</field>
+        <field name="context">{
+            'active_test': False,    
+        }</field>
+        <field name="view_id" ref="staff_movements_list" />
     </record>
 
-    <record id="staff_movements_model_action_entries" model='ir.actions.act_window'>
-        <field name="name">Staff Movement</field>
+    <record id="staff_movements_log_action" model="ir.actions.act_window">
+        <field name="name">Staff Movements</field>
         <field name="res_model">staff.movement</field>
         <field name="view_mode">list,form</field>
-        <field name="view_ids" eval="[(5,0,0),
-            (0, 0, {'view_mode': 'list', 'view_id': ref('entries_staff_movement_list_view')}),
-        ]"/>
-        <field name="context" />
-        <field name="domain">[("mode", "=", "entry")]</field>
-    </record>
-
-    <record id="staff_movements_model_action_departures" model='ir.actions.act_window'>
-        <field name="name">Staff Movement</field>
-        <field name="res_model">staff.movement</field>
-        <field name="view_mode">list,form</field>
-        <field name="context" />
-        <field name="domain">[("mode", "=", "departure")]</field>
-    </record>
-
-    <record id="staff_movements_model_action_change_of_positions" model='ir.actions.act_window'>
-        <field name="name">Staff Movement</field>
-        <field name="res_model">staff.movement</field>
-        <field name="view_mode">list,form</field>
-        <field name="context" />
-        <field name="domain">[("mode", "=", "change_of_position")]</field>
-    </record>
-
-    <record id="staff_movements_model_action_user_reviews" model='ir.actions.act_window'>
-        <field name="name">Staff Movement</field>
-        <field name="res_model">staff.movement</field>
-        <field name="view_mode">list,form</field>
-        <field name="context" />
-        <field name="domain">[("mode", "=", "user_review")]</field>
     </record>
 </odoo>
