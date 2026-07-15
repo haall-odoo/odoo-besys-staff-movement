@@ -32,7 +32,7 @@ run:
 
 clean:
 	@if [ -n ${MODULE_PATH} ]; then \
-		if [ -n MODULE_NAME ]; then \
+		if [ -n ${MODULE_NAME} ]; then \
 			rm -rf ${MODULE_PATH}/${MODULE_NAME}/**/__pycache__; \
 			echo "Cleaned!"; \
 		else \
