@@ -7,7 +7,7 @@ MODULE_NAME=staff_movements
 
 ODOO_PATH="${HOME}/Desktop/labodoo-img/worktree/src/19.0/odoo"
 ENTERPRISE_PATH="${HOME}/Desktop/labodoo-img/worktree/src/19.0/enterprise"
-MODULE_PATH="${HOME}/Desktop/odoo-besys-staff-movement"
+MODULE_PATH=""
 INTERNAL_PATH=""
 
 PATHS=${ODOO_PATH} ${ENTERPRISE_PATH} ${MODULE_PATH}
@@ -31,13 +31,13 @@ run:
 	@${ODOO_PATH}/odoo-bin server --addons-path="${ODOO_PATH}/addons,${ENTERPRISE_PATH},${MODULE_PATH}" -d ${DB_NAME} -i ${MODULE_NAME} -u ${MODULE_NAME} --dev xml,reload --with-demo
 
 clean:
-	@if [ -n ${MODULE_PATH} ]; then \
-		if [ -n ${MODULE_NAME} ]; then \
-			rm -rf ${MODULE_PATH}/${MODULE_NAME}/**/__pycache__; \
-			echo "Cleaned!"; \
-		else \
-			echo "Environment variable MODULE_PATH not set, will not clean!"; \
-		fi \
-	else \
+	@if [ ! -n ${MODULE_PATH} ]; then \
 		echo "Environment variable MODULE_PATH not set, will not clean!"; \
+		exit 1; \
 	fi
+	@if [ ! -n ${MODULE_NAME} ]; then \
+		echo "Environment variable MODULE_PATH not set, will not clean!"; \
+		exit 1; \
+	fi
+	@rm -rf ${MODULE_PATH}/${MODULE_NAME}/**/__pycache__;
+	@echo "Cleaned!";
