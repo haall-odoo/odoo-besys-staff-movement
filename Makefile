@@ -31,4 +31,13 @@ run:
 	@${ODOO_PATH}/odoo-bin server --addons-path="${ODOO_PATH}/addons,${ENTERPRISE_PATH},${MODULE_PATH}" -d ${DB_NAME} -i ${MODULE_NAME} -u ${MODULE_NAME} --dev xml,reload --with-demo
 
 clean:
-	@rm -rf ${MODULE_PATH}/${MODULE_NAME}/*__pycache__
+	@if [ -n ${MODULE_PATH} ]; then \
+		if [ -n MODULE_NAME ]; then \
+			rm -rf ${MODULE_PATH}/${MODULE_NAME}/**/__pycache__; \
+			echo "Cleaned!"; \
+		else \
+			echo "Environment variable MODULE_PATH not set, will not clean!"; \
+		fi \
+	else \
+		echo "Environment variable MODULE_PATH not set, will not clean!"; \
+	fi
