@@ -7,6 +7,9 @@
         <field name="mode">extension</field>
         <field name="arch" type="xml">
             <data string="Channel">
+                <xpath expr="//header" position="inside">
+                    <button string="Create Movement" name="action_wizard_movement" type="object" class="btn"/>
+                </xpath>
                 <xpath expr="//div[@name='button_box']">
                     <button name="action_open_logs"
                         class="oe_stat_button"
@@ -54,14 +57,14 @@
 
                     <group>
                         <group>
-                            <field name="employee_id"/>
+                            <field name="employee_id" readonly="id"/>
                             <field name="job_id"/>
                             <field name="company_id"/>
                         </group>
                         <group>
-                            <field name="movement_type"/>
+                            <field name="movement_type" readonly="id"/>
                             <field name="effective_date"/>
-                            <field name="gram" invisible="modevement_type  not in ('hired', 'rehired')"/>
+                            <field name="gram" invisible="movement_type not in ('hired', 'rehired')"/>
                             <field name="need_equipment" invisible="movement_type not in ('hired', 'rehired', 'change_of_position')"/>
                             <field name="keyboard_layout" invisible="not need_equipment"/>
                             <field name="new_position_id" invisible="movement_type != 'change_of_position'"/>
