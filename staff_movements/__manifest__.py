@@ -1,7 +1,7 @@
 {
     'name': "Staff Movements",
     'version': '0.1',
-    'depends': ['hr_maintenance', 'hr_recruitment', 'bus', 'mail', 'html_editor'],
+    'depends': ['hr_maintenance', 'hr_recruitment'],
     'author': "Odoo S.A. <besysadmin@odoo.com>",
     'category': 'Administration/Staff Movements',
     'description': """
@@ -14,6 +14,7 @@
     'license': 'LGPL-3',
     'data': [
         'views/staff_movements_views.xml',
+        'wizard/staff_movement_departure_wizard.xml',
         'views/menus.xml',
         'security/ir.model.access.csv',
     ]
