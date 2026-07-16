@@ -43,6 +43,22 @@ class HREmployee(models.Model):
             }
             for employee in self])
         return created
+    
+    def open_movement_default_wizard(self):
+        wizard = self.env["staff.movement.default.wizard"].create({
+            'employee_id': self.id,
+        })
+        
+        # 2. Return standard window dictionary context to display the popup
+        return {
+            'name': 'Create Staff Movement',
+            'type': 'ir.actions.act_window',
+            'res_model': 'staff.movement.default.wizard',
+            'view_mode': 'form',
+            'res_id': wizard.id,
+            'target': 'new',
+            'context': self.env.context,
+        }
         
     def open_wizard_staff_departure(self):
         wizard = self.env["staff.movement.departure.wizard"].create(

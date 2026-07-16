@@ -8,7 +8,7 @@
         <field name="arch" type="xml">
             <data string="Channel">
                 <xpath expr="//header" position="inside">
-                    <button string="Create Movement" name="action_wizard_movement" type="object" class="btn"/>
+                    <button string="Create Movement" name="open_movement_default_wizard" type="object" class="btn"/>
                 </xpath>
                 <xpath expr="//div[@name='button_box']">
                     <button name="action_open_logs"

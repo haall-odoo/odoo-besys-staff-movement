@@ -1,1 +1,2 @@
 from . import staff_movement_departure_wizard
+from . import staff_movement_default_wizard

@@ -1,3 +1,3 @@
 from . import hr_employee
-from . import hr_applicant
 from . import staff_movement
+from . import data

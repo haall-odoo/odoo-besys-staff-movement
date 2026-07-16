@@ -1,3 +1,4 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 staff_movements.access_staff_movement,access_staff_movement,staff_movements.model_staff_movement,base.group_user,1,1,1,1
 staff_movements.access_staff_movement_departure_wizard,access_staff_movement_departure_wizard,staff_movements.model_staff_movement_departure_wizard,base.group_user,1,1,1,1
+staff_movements.access_staff_movement_default_wizard,access_staff_movement_default_wizard,staff_movements.model_staff_movement_default_wizard,base.group_user,1,1,1,1

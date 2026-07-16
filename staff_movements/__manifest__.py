@@ -15,6 +15,7 @@
     'data': [
         'views/staff_movements_views.xml',
         'wizard/staff_movement_departure_wizard.xml',
+        'wizard/staff_movement_default_wizard.xml',
         'views/menus.xml',
         'security/ir.model.access.csv',
     ]

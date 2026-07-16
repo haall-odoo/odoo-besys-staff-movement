@@ -1,5 +1,6 @@
 from odoo import api, fields, models #ty: ignore
 from .data.keyboard_layout import KEYBOARD_LAYOUT
+from .data.movement_types import MOVEMENT_TYPES
 
 class StaffMovement(models.Model):
     _name = "staff.movement"
@@ -22,15 +23,9 @@ class StaffMovement(models.Model):
     is_done = fields.Boolean(string="Done", default=False)
     remark = fields.Html()
 
-    movement_type = fields.Selection([
-        ('hired', 'Hired'),
-        ('rehired', 'Rehired'),
-        ('departure', 'Departure'),
-        ('change_of_position', 'Change of position'),
-        ('review', 'Review'),
-    ], required=True)
+    movement_type = fields.Selection(MOVEMENT_TYPES, required=True)
 
-    keyboard_layout = fields.Selection(KEYBOARD_LAYOUT, string="Keyboard Layout")
+    keyboard_layout = fields.Selection(KEYBOARD_LAYOUT)
     need_equipment = fields.Boolean(string="Equipment needed", default=False)
     new_position_id = fields.Many2one("hr.job")
     new_company_id = fields.Many2one("res.company", string="New Company")
