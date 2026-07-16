@@ -44,6 +44,15 @@ class HREmployee(models.Model):
             for employee in self])
         return created
     
+    def action_movement(self, movement_type):
+        created = self.env['staff.movement'].create([
+            {
+                'employee_id': self.id,
+                'movement_type': movement_type,
+            }
+        ])
+        return created
+    
     def open_movement_default_wizard(self):
         wizard = self.env["staff.movement.default.wizard"].create({
             'employee_id': self.id,

@@ -9,8 +9,8 @@ class StaffMovementDeparturWizard(models.TransientModel):
     employee_id = fields.Many2one("hr.employee")
     movement_type = fields.Selection(MOVEMENT_TYPES)
 
-    
+
 
     def action_wizard(self):
-        storage = self.employee_id.open_staff_movement()
+        storage = self.employee_id.action_movement(self.movement_type)
         return storage._get_records_action(target='current')
