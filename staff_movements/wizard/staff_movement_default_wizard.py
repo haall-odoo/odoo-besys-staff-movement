@@ -8,8 +8,7 @@ class StaffMovementDeparturWizard(models.TransientModel):
 
     employee_id = fields.Many2one("hr.employee")
     movement_type = fields.Selection(MOVEMENT_TYPES)
-
-
+    effective_date = fields.Date()
 
     def action_wizard(self):
         storage = self.employee_id.action_movement(self.movement_type)
