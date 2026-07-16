@@ -23,7 +23,7 @@ class StaffMovement(models.Model):
 
     effective_date = fields.Date(default=fields.Date.context_today, required=True, tracking=True)
     is_done = fields.Boolean(string="Done", default=False, tracking=True)
-    remark = fields.Html(tracking=True)
+    remark = fields.Html()
 
     movement_type = fields.Selection(MOVEMENT_TYPES, required=True)
 
