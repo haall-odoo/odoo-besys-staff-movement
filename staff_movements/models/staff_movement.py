@@ -1,4 +1,4 @@
-from odoo import api, fields, models #ty: ignore
+from odoo import api, exceptions, fields, models #ty: ignore
 from .data.keyboard_layout import KEYBOARD_LAYOUT
 from .data.movement_types import MOVEMENT_TYPES
 
@@ -58,3 +58,8 @@ class StaffMovement(models.Model):
             if not record.job_id:
                 record.job_id = record.employee_id.job_id
         return records
+    
+    def unlink(self):
+        raise exceptions.UserError(
+                    ("For audit compliance purposes, staff movement logs cannot be deleted! Archive it instead.")
+                )
