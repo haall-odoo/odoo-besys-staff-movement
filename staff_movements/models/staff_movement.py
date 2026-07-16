@@ -8,6 +8,8 @@ class StaffMovement(models.Model):
     _order = "effective_date desc"
     _inherit = ['mail.thread', 'mail.activity.mixin']
 
+    active = fields.Boolean(default=True, tracking=True)
+
     employee_id = fields.Many2one("hr.employee", required=True)
     
     employee_name = fields.Char(related="employee_id.name", string="Employee name")
@@ -19,16 +21,16 @@ class StaffMovement(models.Model):
     gram = fields.Char()
 
 
-    effective_date = fields.Date(default=fields.Date.context_today, required=True)
-    is_done = fields.Boolean(string="Done", default=False)
-    remark = fields.Html()
+    effective_date = fields.Date(default=fields.Date.context_today, required=True, tracking=True)
+    is_done = fields.Boolean(string="Done", default=False, tracking=True)
+    remark = fields.Html(tracking=True)
 
     movement_type = fields.Selection(MOVEMENT_TYPES, required=True)
 
-    keyboard_layout = fields.Selection(KEYBOARD_LAYOUT)
-    need_equipment = fields.Boolean(string="Equipment needed", default=False)
-    new_position_id = fields.Many2one("hr.job")
-    new_company_id = fields.Many2one("res.company", string="New Company")
+    keyboard_layout = fields.Selection(KEYBOARD_LAYOUT, tracking=True)
+    need_equipment = fields.Boolean(string="Equipment needed", default=False, tracking=True)
+    new_position_id = fields.Many2one("hr.job", tracking=True)
+    new_company_id = fields.Many2one("res.company", string="New Company", tracking=True)
 
 
     @api.onchange('employee_id', 'movement_type')
@@ -61,5 +63,5 @@ class StaffMovement(models.Model):
     
     def unlink(self):
         raise exceptions.UserError(
-                    ("For audit compliance purposes, staff movement logs cannot be deleted! Archive it instead.")
-                )
+            "For audit compliance purposes, staff movement logs cannot be deleted! Archive it instead."
+        )
