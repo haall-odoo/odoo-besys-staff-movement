@@ -13,8 +13,10 @@
     'auto_install': True,
     'license': 'LGPL-3',
     'data': [
-        'views/staff_movements_views.xml',
-        'views/staff_movement_type_views.xml',
+        'views/staff_movements_view.xml',
+        'views/staff_movement_task_view.xml',
+        'views/staff_movement_task_template_view.xml',
+        'views/staff_movement_type_view.xml',
         'wizard/staff_movement_departure_wizard.xml',
         'wizard/staff_movement_default_wizard.xml',
         'views/menus.xml',

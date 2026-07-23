@@ -4,8 +4,8 @@ class StaffMovementType(models.Model):
     _name = "staff.movement.type"
     _description = f"{_name}.description"
 
-    name = fields.Char(required=True)
-    technical_name = fields.Char(required=True)
+    name = fields.Char("Display Name", required=True)
+    technical_name = fields.Char("Technical Name", required=True)
 
     _technical_name_uniq_constraints = models.Constraint(
             'UNIQUE(technical_name)',
@@ -16,6 +16,8 @@ class StaffMovementType(models.Model):
             'UNIQUE(name)',
             'The display name must be unique!'
         )
+    
+    related_movement_task_ids = fields.Many2many("staff.movement.task.template")
 
 
     is_changing_company = fields.Boolean(required=True, default=False)

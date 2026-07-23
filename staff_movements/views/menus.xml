@@ -1,4 +1,8 @@
 <?xml version="1.0"?>
 <odoo>
-    <menuitem id="movements_menu" name=" Staff Movements" action="staff_movements_menu_action" parent="hr.menu_hr_root" sequence="99"/>
+    <menuitem id="movements_menu" name="Staff Movements"  parent="hr.menu_hr_root" sequence="99">
+        <menuitem id="movements_menu_button" name="Movements" action="staff_movements_menu_action" sequence="1"/>
+        <menuitem id="movement_type_menu_button" name="Types" action="staff_movements_type_menu_action" sequence="2"/>
+        <menuitem id="movement_task_menu_button" name="Tasks" action="staff_movements_task_menu_action" sequence="3"/>
+    </menuitem>
 </odoo>

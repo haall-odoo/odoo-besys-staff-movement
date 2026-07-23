@@ -5,5 +5,15 @@ class StaffMovementTask(models.Model):
     _description = f"{_name}.description"
 
     name = fields.Char(required=True)
-    description = fields.Char(required=True)
-    # related_movement_type_ids = fields.Many2many("")
+    state = fields.Boolean(default=False)
+    description = fields.Html()
+    active = fields.Boolean(default=True, required=True)
+
+    template_id = fields.Many2one("staff.movement.task.template")
+    movement_id = fields.Many2one("staff.movement", string="Movement")
+
+    def mark_as_done(self):
+        self.state = True
+
+    def mark_as_cancelled(self):
+        self.active = False

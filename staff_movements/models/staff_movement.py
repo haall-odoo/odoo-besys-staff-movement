@@ -1,5 +1,5 @@
-from xml.dom import ValidationErr
 from odoo import api, exceptions, fields, models #ty: ignore
+from odoo import Command #ty : ignore
 from .data.keyboard_layout import KEYBOARD_LAYOUT
 
 class StaffMovement(models.Model):
@@ -39,9 +39,27 @@ class StaffMovement(models.Model):
     is_needing_equipment = fields.Boolean(related="movement_type_id.is_needing_equipment")
     is_former_employee_link_needed = fields.Boolean(related="movement_type_id.is_former_employee_link_needed")
 
+    task_ids = fields.One2many("staff.movement.task", "movement_id", string="Tasks")
+
+    @api.onchange("movement_type_id")
+    def _onchange_movement_type_id(self):
+        """ Instantiates fresh copies of tasks based on the selected type """
+        if not self.movement_type_id:
+            self.task_ids = [Command.clear()]
+            return
+
+        task_commands = [Command.clear()]
+        for task_template in self.movement_type_id.related_movement_task_ids:
+            task_commands.append(Command.create({
+                'name': task_template.name,
+                'description': task_template.description,
+                'template_id': task_template.id,
+                'active': True,
+            }))
+        self.task_ids = task_commands
 
     @api.onchange('employee_id')
-    def _onchange_employee_and_type(self):
+    def _onchange_employee(self):
         for record in self.filtered("employee_id"):
             employee_id = record.employee_id
             if employee_id:

@@ -34,7 +34,7 @@ class StaffMovementDeparturWizard(models.TransientModel):
         self.env['staff.movement'].create([
             {
                 'employee_id': self.employee_id.id,
-                'movement_type_id': self.movement_type_id,
+                'movement_type_id': self.movement_type_id.id,
                 'effective_date': self.effective_date,
 
                 'new_company_id': self.new_company_id.id,

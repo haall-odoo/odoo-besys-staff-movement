@@ -110,6 +110,9 @@
                         <page name="Remark">
                             <field name="remark" type="html" options="{'collaborative': true, 'resizable': false}" placeholder="Add details about this staff movement..."/>
                         </page>
+                        <page name="Tasks">
+                            <field name="task_ids"/>
+                        </page>
                     </notebook>
                 </sheet>
                 <chatter reload_on_follower="True"/>

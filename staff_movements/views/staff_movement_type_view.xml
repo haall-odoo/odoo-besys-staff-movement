@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<odoo>
+    <record id="staff_movement_type_form_view" model="ir.ui.view">
+        <field name="name">staff.movement.type.form</field>
+        <field name="model">staff.movement.type</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <label for="name" string="Display Name"/>
+                            <field name="name" placeholder="ex: Hired, Departure..."/>
+                        </h1>
+                        <h2>
+                            <label for="name" string="Technical Name"/>
+                            <field name="technical_name" placeholder="ex: hired, departure, change_of_position..."/>
+                        </h2>
+                    </div>
+
+                    <group>
+                        <group string="Organizational Changes">
+                            <field name="is_changing_company"/>
+                            <field name="is_changing_department"/>
+                            <field name="is_changing_position"/>
+                        </group>
+                        <group string="Equipment &amp; Links">
+                            <field name="is_needing_equipment"/>
+                            <field name="is_former_employee_link_needed"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="Related Tasks">
+                            <field name="related_movement_task_ids">
+                                <list editable="bottom">
+                                    <field name="name"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="staff_movements_type_menu_action" model="ir.actions.act_window">
+        <field name="name">Staff Movements Types</field>
+        <field name="res_model">staff.movement.type</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+</odoo>
