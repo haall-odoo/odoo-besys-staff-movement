@@ -29,7 +29,7 @@ Several commands are available to help you run this project:
     profile_picture = fields.Image(related="employee_id.image_1920")
     actual_company = fields.Many2one(related="employee_id.company_id", string="Actual Company")
     company_id = fields.Many2one("res.company", readonly=True, string="Company")
-    job_id = fields.Many2one("hr.job", readonly=True)
+    actual_position_id = fields.Many2one("hr.job", readonly=True)
     gram = fields.Char()
     effective_date = fields.Date(default=fields.Date.context_today, required=True, tracking=True)
     is_done = fields.Boolean(string="Done", default=False, tracking=True)

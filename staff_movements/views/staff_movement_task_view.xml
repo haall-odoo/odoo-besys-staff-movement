@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<odoo>
+    <record id="staff_movement_task_form" model="ir.ui.view">
+        <field name="name">staff.movement.task.form</field>
+        <field name="model">staff.movement</field>
+        <field name="arch" type="xml">
+            <form>
+                <field name="name"/>
+                <field name="description"/>
+                <!-- <field name="related_movement_type_ids" options="{'no_open': True, 'no_quick_create': True}" widget="many2many_avatar_user" on_change="1" can_create="True" can_write="True"/> -->
+            </form>
+        </field>
+    </record>
+
+    <record id="staff_movement_task_list" model="ir.ui.view">
+        <field name="name">staff.movement.task.list</field>
+        <field name="model">staff.movement</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+            </list>
+        </field>
+    </record>
+</odoo>

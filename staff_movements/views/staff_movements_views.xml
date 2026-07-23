@@ -37,12 +37,28 @@
         <field name="name">staff.movement.list</field>
         <field name="model">staff.movement</field>
         <field name="arch" type="xml">
-            <list decoration-warning="is_done">
-                <field name="employee_name"/>
+            <list decoration-muted="not active">
+                <field name="employee_id" column_invisible="not context.get('show_employee_col')"/>
                 <field name="effective_date"/>
-                <field name="movement_type"/>
-                <field name="job_id"/>
-                <field name="company_id"/>
+                <field name="movement_type_id"/>
+                <field name="actual_company_id"/>
+                <field name="actual_position_id"/>
+
+                <button name="mark_as_done" 
+                    string="Mark Done" 
+                    type="object" 
+                    icon="fa-bars" 
+                    class="btn-link"
+                    invisible="is_done or not active"
+                    />
+
+                <button name="mark_as_cancelled" 
+                    string="Cancel" 
+                    type="object" 
+                    icon="fa-bars" 
+                    class="btn-link"
+                    invisible="is_done or not active"
+                    />
             </list>
         </field>
     </record>
@@ -51,7 +67,7 @@
         <field name="name">staff.movement.form</field>
         <field name="model">staff.movement</field>
         <field name="arch" type="xml">
-            <form>
+            <form delete="0">
                 <sheet>
                     <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger" invisible="active"/>
                     <field name="profile_picture" nolabel="1" widget="image" class="m-0" options="{'size': [128,128], 'zoom': false, 'preview_image':'profile_picture', 'img_class': 'border rounded h-100 object-fit-contain'}"/>
@@ -59,17 +75,35 @@
                     <group>
                         <group>
                             <field name="employee_id" readonly="id"/>
-                            <field name="job_id"/>
-                            <field name="company_id"/>
+                            <field name="actual_company_id" readonly="1"/>
+                            <field name="actual_department_id" readonly="1"/>
+                            <field name="actual_position_id" readonly="1"/>
                         </group>
                         <group>
-                            <field name="movement_type" readonly="id"/>
+                            <field name="movement_type_id" readonly="0"/>
                             <field name="effective_date"/>
-                            <field name="gram" invisible="movement_type not in ('hired', 'rehired')"/>
-                            <field name="need_equipment" invisible="movement_type not in ('hired', 'rehired', 'change_of_position')"/>
-                            <field name="keyboard_layout" invisible="not need_equipment"/>
-                            <field name="new_position_id" invisible="movement_type != 'change_of_position'"/>
-                            <field name="new_company_id" invisible="movement_type != 'change_of_position'"/>
+                            <field name="is_equipment_needed"
+                                invisible="not is_needing_equipment"
+                                />
+                            <field name="keyboard_layout"
+                                invisible="not is_equipment_needed"
+                                />
+                            <field name="new_company_id" 
+                                invisible="not is_changing_company" 
+                                required="is_changing_company"
+                                />
+                            <field name="new_department_id"
+                                invisible="not is_changing_department"
+                                required="is_changing_department"
+                                />
+                            <field name="new_position_id"
+                                invisible="not is_changing_position"
+                                required="is_changing_position"
+                                />
+                            <field name="former_employee_id"
+                                invisible="not is_former_employee_link_needed"
+                                required="is_former_employee_link_needed"
+                                />
                         </group>                            
                     </group>
                     <notebook>
@@ -88,14 +122,20 @@
         <field name="model">staff.movement</field>
         <field name="arch" type="xml">
             <search string="Staff Movements">
-                <field name="employee_name"/>
-                <field name="job_id"/>
-                <filter string="Active" name="filter_active" domain="[('active', '=', True)]"/>
-                <filter string="Archived" name="filter_archived" domain="[('active', '=', False)]"/>
+                <field name="employee_id"/>
+                <field name="actual_position_id"/>
+                <group>
+                    <filter string="Arrivals" name="filter_arrivals" domain="[('movement_type_id.technical_name', 'ilike', 'hired')]"/>
+                    <filter string="Change of Position" name="filter_change_of_position" domain="[('movement_type_id.technical_name', 'ilike', 'change_of_position')]"/>
+                    <filter string="Departures" name="filter_departures" domain="[('movement_type_id.technical_name', 'ilike', 'departure')]"/>
+                </group>
+                <group>
+                    <filter string="Active" name="filter_active" domain="[('active', '=', True)]"/>
+                    <filter string="Archived" name="filter_archived" domain="[('active', '=', False)]"/>
+                </group>
             </search>
         </field>
     </record>
-
 
     <record id="staff_movements_menu_action" model="ir.actions.act_window">
         <field name="name">Staff Movements</field>
@@ -105,17 +145,11 @@
         <field name="context">{
             'active_test': False,
             'search_default_filter_active': 1,
+            'show_employee_col': 1,
+            'group_by': 'movement_type_id',
         }</field>
+        <field name="domain">[("is_done", "=", False)]</field>
         <field name="view_id" ref="staff_movements_list" />
-    </record>
-
-    <record id="staff_movements_log_action" model="ir.actions.act_window">
-        <field name="name">Staff Movements</field>
-        <field name="res_model">staff.movement</field>
-        <field name="view_mode">list,form</field>
-        <field name="context">{
-            'active_test': True,
-        }</field>
     </record>
 
     <record id="action_fire_batch_employee" model="ir.actions.server">

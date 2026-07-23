@@ -11,6 +11,7 @@ class HREmployee(models.Model):
         compute="_compute_versions_count",
     )
 
+    # Automate this depending on rehire/hire
     # @api.model_create_multi
     # def create(self, vals_list):
     #     employees = super(HREmployee, self).create(vals_list)
@@ -29,9 +30,9 @@ class HREmployee(models.Model):
 
     def action_open_logs(self):
         # FIX: Ensure it returns a cleanly localized domain filter 
-        action = self.env.ref("staff_movements.staff_movements_log_action").read()[0]
+        action = self.env.ref("staff_movements.staff_movements_menu_action").read()[0]
         action['domain'] = [('employee_id', '=', self.id)]
-        action['context'] = {'default_employee_id': self.id}
+        action['context'] = {'default_employee_id': self.id, 'show_employee_col': True}
         return action
     
     def action_fire_employees(self, date):
@@ -44,21 +45,12 @@ class HREmployee(models.Model):
             for employee in self])
         return created
     
-    def action_movement(self, movement_type):
-        created = self.env['staff.movement'].create([
-            {
-                'employee_id': self.id,
-                'movement_type': movement_type,
-            }
-        ])
-        return created
     
     def open_movement_default_wizard(self):
         wizard = self.env["staff.movement.default.wizard"].create({
             'employee_id': self.id,
         })
         
-        # 2. Return standard window dictionary context to display the popup
         return {
             'name': 'Create Staff Movement',
             'type': 'ir.actions.act_window',

@@ -8,8 +8,30 @@
                 <sheet>
                     <group>
                         <field name="employee_id" required="1"/>
-                        <field name="movement_type" required="1"/>
+                        <field name="movement_type_id" required="1"/>
                         <field name="effective_date" required="1"/>
+
+
+                        <field name="actual_company_id" readonly="1"/>
+                        <field name="actual_department_id" readonly="1"/>
+                        <field name="actual_position_id" readonly="1"/>
+                        
+                        <field name="new_company_id" 
+                            invisible="not is_changing_company" 
+                            required="is_changing_company"
+                            />
+                        <field name="new_department_id" 
+                            invisible="not is_changing_department" 
+                            required="is_changing_department"
+                            />
+                        <field name="new_position_id" 
+                            invisible="not is_changing_position" 
+                            required="is_changing_position"
+                            />
+                        <field name="former_employee_id" 
+                            invisible="not is_former_employee_link_needed"
+                            required="is_former_employee_link_needed"
+                            />
                     </group>
                 </sheet>
                 <footer>
