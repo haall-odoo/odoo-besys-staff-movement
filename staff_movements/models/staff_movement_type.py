@@ -26,3 +26,6 @@ class StaffMovementType(models.Model):
 
     is_needing_equipment = fields.Boolean(required=True, default=False)
     is_former_employee_link_needed = fields.Boolean(required=True, default=False)
+
+    is_link_to_user_needed = fields.Boolean(required=True, default=False)
+    

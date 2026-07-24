@@ -26,6 +26,7 @@
                         <group string="Equipment &amp; Links">
                             <field name="is_needing_equipment"/>
                             <field name="is_former_employee_link_needed"/>
+                            <field name="is_link_to_user_needed"/>
                         </group>
                     </group>
                     <notebook>

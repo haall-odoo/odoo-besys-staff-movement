@@ -6,9 +6,9 @@ class HREmployee(models.Model):
 
     staff_movement_ids = fields.One2many(comodel_name="staff.movement", inverse_name="employee_id")
 
-    versions_count = fields.Integer(
+    movements_count = fields.Integer(
         string="Movements Count", 
-        compute="_compute_versions_count",
+        compute="_compute_movements_count",
     )
 
     # Automate this depending on rehire/hire
@@ -24,9 +24,9 @@ class HREmployee(models.Model):
     #     return employees
 
     @api.depends('staff_movement_ids')
-    def _compute_versions_count(self):
+    def _compute_movements_count(self):
         for record in self:
-            record.versions_count = len(record.staff_movement_ids)
+            record.movements_count = len(record.staff_movement_ids)
 
     def action_open_logs(self):
         # FIX: Ensure it returns a cleanly localized domain filter 

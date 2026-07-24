@@ -2,7 +2,7 @@ from ..models.data.keyboard_layout import KEYBOARD_LAYOUT
 from odoo import api, fields, models # ty: ignore
 
 
-class StaffMovementDeparturWizard(models.TransientModel):
+class StaffMovementDefaultWizard(models.TransientModel):
     _name = "staff.movement.default.wizard"
     _description = f"{_name}.description"
 
@@ -62,5 +62,5 @@ class StaffMovementDeparturWizard(models.TransientModel):
                     record.actual_position_id = employee_id.job_id
                 if not record.actual_position_id:
                     record.actual_position_id = employee_id.job_id
-                if not self.new_company_id and self.actual_company_id:
-                    self.new_company_id = self.actual_company_id
+                if not record.new_company_id and record.actual_company_id:
+                    record.new_company_id = record.actual_company_id

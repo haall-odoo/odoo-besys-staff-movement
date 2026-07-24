@@ -19,14 +19,14 @@
                         <div class="o_stat_info">
                             Staff Movements
                             <span class="o_stat_value">
-                                <field name="versions_count"/>
+                                <field name="movements_count"/>
                             </span>
                         </div>
                     </button>
                 </xpath>
                 <xpath expr="//notebook" position="inside">
                     <page name="Staff Movement">
-                        <field name="staff_movement_ids" readonly="True"/>
+                        <field name="staff_movement_ids" readonly="1"/>
                     </page>
                 </xpath>
             </data>
@@ -104,6 +104,10 @@
                                 invisible="not is_former_employee_link_needed"
                                 required="is_former_employee_link_needed"
                                 />
+                            <field name="related_user_id"
+                                invisible="not is_link_to_user_needed"
+                                required="is_link_to_user_needed"
+                                />
                         </group>                            
                     </group>
                     <notebook>
@@ -155,7 +159,7 @@
         <field name="view_id" ref="staff_movements_list" />
     </record>
 
-    <record id="action_fire_batch_employee" model="ir.actions.server">
+    <!-- <record id="action_fire_batch_employee" model="ir.actions.server">
         <field name="name">Fire Employee(s)</field>
         <field name="model_id" ref="hr.model_hr_employee"/>
         <field name="binding_model_id" ref="hr.model_hr_employee"/>
@@ -165,5 +169,5 @@
 if records:
     action = records.open_wizard_staff_departure()
         </field>
-    </record>
+    </record> -->
 </odoo>

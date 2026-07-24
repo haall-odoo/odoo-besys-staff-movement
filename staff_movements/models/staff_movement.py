@@ -32,12 +32,15 @@ class StaffMovement(models.Model):
     new_department_id = fields.Many2one("hr.department", tracking=True)
     new_company_id = fields.Many2one("res.company", string="New Company", tracking=True)
 
+    related_user_id = fields.Many2one("res.users", tracking=True)
+
 
     is_changing_company = fields.Boolean(related="movement_type_id.is_changing_company")
     is_changing_department = fields.Boolean(related="movement_type_id.is_changing_department")
     is_changing_position = fields.Boolean(related="movement_type_id.is_changing_position")
     is_needing_equipment = fields.Boolean(related="movement_type_id.is_needing_equipment")
     is_former_employee_link_needed = fields.Boolean(related="movement_type_id.is_former_employee_link_needed")
+    is_link_to_user_needed = fields.Boolean(related="movement_type_id.is_link_to_user_needed")
 
     task_ids = fields.One2many("staff.movement.task", "movement_id", string="Tasks")
 
@@ -71,8 +74,8 @@ class StaffMovement(models.Model):
                     record.actual_position_id = employee_id.job_id
                 if not record.actual_position_id:
                     record.actual_position_id = employee_id.job_id
-                if not self.new_company_id and self.actual_company_id:
-                    self.new_company_id = self.actual_company_id
+                if not record.new_company_id and record.actual_company_id:
+                    record.new_company_id = record.actual_company_id
 
     @api.model_create_multi
     def create(self, vals_list):
